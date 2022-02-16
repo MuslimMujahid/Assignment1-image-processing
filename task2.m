@@ -1,4 +1,4 @@
-originalImage = imread('images/room.jpg');
+originalImage = imread('images/nuts.tif');
 enchantedImage = contrastEnchancement(originalImage);
 
 figure
@@ -6,9 +6,17 @@ subplot(2, 1, 1), imshow(originalImage);
 subplot(2, 1, 2), imshow(enchantedImage);
 
 function enchantedImage = contrastEnchancement(originalImage)
+    if size(originalImage, 3) == 1
+        grayImage = originalImage;
+    elseif size(originalImage, 3) == 3
+        grayImage = rgb2gray(originalImage);
+    else
+        return
+    end
+        
     %find r_min and r_max
-    r_min = min(matToVect(originalImage));
-    r_max = max(matToVect(originalImage));
+    r_min = min(matToVect(grayImage));
+    r_max = max(matToVect(grayImage));
     
     n_row = size(originalImage, 1);
     n_col = size(originalImage , 2);
